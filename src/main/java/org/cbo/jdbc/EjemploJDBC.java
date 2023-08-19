@@ -12,13 +12,10 @@ public class EjemploJDBC {
             String url = "jdbc:mysql://localhost:3310/bansaa";
             String username = "root";
             String password = "admin";
-            Connection conn = null;
-            Statement statement = null;
-            ResultSet resultSet = null;
-            try {
-                conn = DriverManager.getConnection(url, username, password);
-                statement =  conn.createStatement();
-                resultSet = statement.executeQuery("SELECT * from competencias");
+            try (Connection conn = DriverManager.getConnection(url, username, password);
+                Statement statement =  conn.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * from competencias")){
+                
                 while(resultSet.next()){
                     System.out.println(resultSet.getString("nombre"));
                     
@@ -26,15 +23,6 @@ public class EjemploJDBC {
                
             } catch (SQLException e) {
                 System.out.println(e.getMessage());    
-            }finally{
-                try {
-                    resultSet.close();
-                    statement.close();
-                    conn.close();
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-               
             }
     }
 
