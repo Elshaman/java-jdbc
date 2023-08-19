@@ -12,18 +12,29 @@ public class EjemploJDBC {
             String url = "jdbc:mysql://localhost:3310/bansaa";
             String username = "root";
             String password = "admin";
+            Connection conn = null;
+            Statement statement = null;
+            ResultSet resultSet = null;
             try {
-                Connection conn = DriverManager.getConnection(url, username, password);
-                Statement statement =  conn.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * from competencias");
+                conn = DriverManager.getConnection(url, username, password);
+                statement =  conn.createStatement();
+                resultSet = statement.executeQuery("SELECT * from competencias");
                 while(resultSet.next()){
                     System.out.println(resultSet.getString("nombre"));
+                    
                 }
-                resultSet.close();
-                statement.close();
-                conn.close();
+               
             } catch (SQLException e) {
                 System.out.println(e.getMessage());    
+            }finally{
+                try {
+                    resultSet.close();
+                    statement.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+               
             }
     }
 
