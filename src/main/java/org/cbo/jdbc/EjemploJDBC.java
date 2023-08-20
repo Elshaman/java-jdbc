@@ -14,6 +14,7 @@ public class EjemploJDBC {
           try(Connection conn = ConexionBaseDatos.obtenerInstancia()){
             Repositorio<Programa> repositorio = new ProgramaRepositorio();
             repositorio.listar().forEach(p->System.out.println(p.getNombre()));
+            System.out.println(repositorio.porId(1L));
           }catch(SQLException e){
             e.printStackTrace();
           }

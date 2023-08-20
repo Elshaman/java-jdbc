@@ -36,7 +36,7 @@ public class ProgramaRepositorio implements Repositorio<Programa> {
     @Override
     public Programa porId(Long id) {
        Programa programa = null;
-       try(PreparedStatement statement = getConection().prepareStatement("SELECT * FROM productos WHERE id = ?")){
+       try(PreparedStatement statement = getConection().prepareStatement("SELECT * FROM programas WHERE id = ?")){
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
