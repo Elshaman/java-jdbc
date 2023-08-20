@@ -1,29 +1,23 @@
 package org.cbo.jdbc;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
+import org.cbo.jdbc.modelo.Programa;
+import org.cbo.jdbc.repositorio.ProgramaRepositorio;
+import org.cbo.jdbc.repositorio.Repositorio;
 import org.cbo.jdbc.util.ConexionBaseDatos;
 
 public class EjemploJDBC {
 
     public static void main(String[] args) {
-          
-            try (Connection conn = ConexionBaseDatos.obtenerInstancia();
-                Statement statement =  conn.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * from competencias")){
-                
-                while(resultSet.next()){
-                    System.out.println(resultSet.getString("nombre"));
-                    
-                }
-               
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());    
-            }
+          try(Connection conn = ConexionBaseDatos.obtenerInstancia()){
+            Repositorio<Programa> repositorio = new ProgramaRepositorio();
+            repositorio.listar().forEach(p->System.out.println(p.getNombre()));
+          }catch(SQLException e){
+            e.printStackTrace();
+          }
+           
     }
 
    
