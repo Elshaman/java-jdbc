@@ -6,8 +6,17 @@ public class Programa {
     private String codigo;
     private String version; 
     private String estado;
+    private Long id;
 
     
+
+    @Override
+    public String toString() {
+        return "Programa [nombre=" + nombre + ", codigo=" + codigo + ", version=" + version + ", estado=" + estado
+                + ", id=" + id + "]";
+    }
+
+
 
     public Programa(String nombre, String codigo, String version, String estado, Long id) {
         this.nombre = nombre;
@@ -22,9 +31,7 @@ public class Programa {
     public Programa() {
     }
 
-
-
-    private Long id;
+    
     public Long getId() {
         return id;
     }
