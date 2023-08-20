@@ -18,12 +18,12 @@ public class Programa {
 
 
 
-    public Programa(String nombre, String codigo, String version, String estado, Long id) {
+    public Programa(String nombre, String codigo, String version, String estado) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.version = version;
         this.estado = estado;
-        this.id = id;
+        //this.id = id;
     }
 
     

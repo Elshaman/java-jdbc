@@ -51,14 +51,35 @@ public class ProgramaRepositorio implements Repositorio<Programa> {
 
     @Override
     public void guardar(Programa t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'guardar'");
+        String sql;
+        if (t.getId()!= null && t.getId() > 0  ) {
+            sql = "update programas set nombre = ? , version = ? , codigo=? , estado =? where id = ?";
+        } else {
+            sql = "insert into programas(nombre, version, codigo, estado) values(?,?,?,?)";
+        } 
+        try (PreparedStatement preparedStatement = getConection().prepareStatement(sql)){
+            preparedStatement.setString(1, t.getNombre());
+            preparedStatement.setString(2, t.getVersion());
+            preparedStatement.setString(3, t.getCodigo());
+            preparedStatement.setString(4, t.getEstado());
+            if (t.getId()!= null && t.getId() > 0  ) {
+                preparedStatement.setLong(5, t.getId());
+            } 
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void eliminar(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+       try (PreparedStatement stmt = getConection().
+                    prepareStatement("DELETE FROM programas WHERE id=?")){
+                        stmt.setLong(1, id);
+                        stmt.executeUpdate();
+       } catch (SQLException e) {
+        e.printStackTrace();
+       }
     }
 
     private Programa crearPrograma(ResultSet resultSet) throws SQLException {
