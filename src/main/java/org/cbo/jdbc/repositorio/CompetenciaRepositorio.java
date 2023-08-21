@@ -11,6 +11,8 @@ import org.cbo.jdbc.modelo.Competencia;
 import org.cbo.jdbc.modelo.Programa;
 import org.cbo.jdbc.util.ConexionBaseDatos;
 
+import java.sql.PreparedStatement;
+
 public class CompetenciaRepositorio implements Repositorio<Competencia> {
 
     private Connection getConection() throws SQLException {
@@ -48,8 +50,25 @@ public class CompetenciaRepositorio implements Repositorio<Competencia> {
 
     @Override
     public Competencia porId(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'porId'");
+        Competencia competencia = null;
+
+        try (PreparedStatement preparedStatement = getConection().
+                prepareStatement("SELECT c.*,p.nombre as programa FROM competencias AS c" +
+                    " INNER JOIN programas AS p ON(c.programa_id = p.id) "   + 
+                    " where c.id = ?")) {
+                        preparedStatement.setLong(1, id);
+                        try (ResultSet rs = preparedStatement.executeQuery()) {
+                            if(rs.next()){
+                                competencia = crearCompetencia(rs);    
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return competencia;
     }
 
 

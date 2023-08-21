@@ -15,6 +15,9 @@ public class EjemploJDBC {
             Repositorio<Competencia> repositorio = new CompetenciaRepositorio();
             System.out.println("=============listar=============");
             repositorio.listar().forEach(p->System.out.println(p.toString()));
+            System.out.println("=============listar por id=============");
+            Competencia c = repositorio.porId(1L);
+            System.out.println(c);
           }catch(SQLException e){
             e.printStackTrace();
           }
