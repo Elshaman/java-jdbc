@@ -80,8 +80,23 @@ public class CompetenciaRepositorio implements Repositorio<Competencia> {
 
     @Override
     public void guardar(Competencia t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'guardar'");
+        String sql;
+        if (t.getId()!= null && t.getId() > 0  ) {
+            sql = "update competencias set nombre = ? ,  codigo=? , programa_id=? where id = ?";
+        } else {
+            sql = "insert into competencias(nombre,  codigo, programa_id) values(?,?,?)";
+        } 
+        try (PreparedStatement preparedStatement = getConection().prepareStatement(sql)){
+            preparedStatement.setString(1, t.getNombre());
+            preparedStatement.setString(2, t.getCodigo());
+            preparedStatement.setLong(3, t.getPrograma().getId());
+            if (t.getId()!= null && t.getId() > 0  ) {
+                preparedStatement.setLong(4, t.getId());
+            } 
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     
 }
