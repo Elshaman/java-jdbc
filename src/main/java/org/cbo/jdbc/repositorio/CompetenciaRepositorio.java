@@ -74,8 +74,13 @@ public class CompetenciaRepositorio implements Repositorio<Competencia> {
 
     @Override
     public void eliminar(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+        try (PreparedStatement stmt = getConection().
+                    prepareStatement("DELETE FROM competencias WHERE id=?")){
+                        stmt.setLong(1, id);
+                        stmt.executeUpdate();
+       } catch (SQLException e) {
+        e.printStackTrace();
+       }
     }
 
     @Override

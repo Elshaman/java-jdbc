@@ -12,8 +12,6 @@ public class Competencia {
 
     
 
-
-
     @Override
     public String toString() {
         return "Competencia [nombre=" + nombre + ", codigo=" + codigo + ", programa=" + programa.getNombre() + "]";

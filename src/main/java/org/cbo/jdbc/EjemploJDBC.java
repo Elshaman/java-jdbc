@@ -29,6 +29,14 @@ public class EjemploJDBC {
             Programa p = repoprogr.porId(1L);
             c1.setPrograma(p);
             repositorio.guardar(c1);
+            System.out.println("=============eliminar=============");
+            repositorio.eliminar(18L);
+            System.out.println("=============sctualizar=============");
+            /*Competencia c2 = new Competencia();
+            c2.setId(1L);
+            c2.setNombre("CULIAR RICO CON NANO");
+            c2.setPrograma());
+            repositorio.guardar(c2);*/
           }catch(SQLException e){
             e.printStackTrace();
           }
