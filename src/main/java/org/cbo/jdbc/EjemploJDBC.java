@@ -13,7 +13,7 @@ import org.cbo.jdbc.util.ConexionBaseDatos;
 public class EjemploJDBC {
 
     public static void main(String[] args) {
-          try(Connection conn = ConexionBaseDatos.obtenerInstancia()){
+         
             CompetenciaRepositorio repositorio = new CompetenciaRepositorio();
             ProgramaRepositorio repoprogr = new ProgramaRepositorio();
 
@@ -37,9 +37,7 @@ public class EjemploJDBC {
             c2.setNombre("CULIAR RICO CON NANO");
             c2.setPrograma());
             repositorio.guardar(c2);*/
-          }catch(SQLException e){
-            e.printStackTrace();
-          }
+         
            
     }
 

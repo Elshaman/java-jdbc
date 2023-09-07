@@ -19,7 +19,9 @@ public class ProgramaRepositorio implements Repositorio<Programa> {
     @Override
     public List<Programa> listar() {
         List<Programa> programas = new ArrayList<>();
-        try (Statement statement = getConection().createStatement();
+
+        try (Connection connection = getConection();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM programas")) {
                 while(resultSet.next()){
                     Programa p = crearPrograma(resultSet);
@@ -36,7 +38,8 @@ public class ProgramaRepositorio implements Repositorio<Programa> {
     @Override
     public Programa porId(Long id) {
        Programa programa = null;
-       try(PreparedStatement statement = getConection().prepareStatement("SELECT * FROM programas WHERE id = ?")){
+       try(Connection connection = getConection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM programas WHERE id = ?")){
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
@@ -57,7 +60,9 @@ public class ProgramaRepositorio implements Repositorio<Programa> {
         } else {
             sql = "insert into programas(nombre, version, codigo, estado) values(?,?,?,?)";
         } 
-        try (PreparedStatement preparedStatement = getConection().prepareStatement(sql)){
+        try (
+            Connection connection = getConection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, t.getNombre());
             preparedStatement.setString(2, t.getVersion());
             preparedStatement.setString(3, t.getCodigo());
@@ -73,7 +78,8 @@ public class ProgramaRepositorio implements Repositorio<Programa> {
 
     @Override
     public void eliminar(Long id) {
-       try (PreparedStatement stmt = getConection().
+       try (        Connection connection = getConection();
+                    PreparedStatement stmt = connection.
                     prepareStatement("DELETE FROM programas WHERE id=?")){
                         stmt.setLong(1, id);
                         stmt.executeUpdate();
